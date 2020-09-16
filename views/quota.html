@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>疫情防控大数据可视化</title>
+    <link href="../styles/common2.css" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/DrawingManager_min.css" />
+    <script src="../scripts/Plugin/jquery-3.3.1.min.js"></script>
+    
+        <script src="../scripts/common.js"></script>
+        <script src="../scripts/quota.js"></script>
+
+        <!--<script src="../scripts/Plugin/jquery.min.js"></script>-->
+        <script src="http://api.map.baidu.com/api?v=2.0&ak=1XjLLEhZhQNUzd93EjU5nOGQ"></script>
+        <script src="../scripts/Plugin/echarts3.8.5.min.js"></script>
+        <script src="../scripts/Plugin/bmap3.8.5.min.js"></script>
+        <script src="../scripts/Plugin/laydate/laydate.js"></script>
+        <script src="../scripts/Plugin/DrawingManager_min.js"></script>
+
+    <script>
+        
+        
+    </script>      
+</head>
+<body>
+<!--顶部-->
+<header class="header left">
+  <div class="left nav header_left">
+  </div>
+    <div class="header_center left" style="position:relative">       
+        <h2><strong><li id="schoolName">疫情大数据展示</li></strong></h2>
+    </div>
+    <div class="right nav text_right">
+    </div>
+
+</header>
+<!--内容部分-->
+<div class="con left">
+  <!--数据总概-->
+  <div class="con_div">
+      <div class="con_div_text1_1 left">
+          
+        <div class="select-box">
+            
+             <ul id="barType">
+                 <li class="active" data-value="1">学生</li>
+                 <li data-value="2">教职工</li>
+             </ul>
+            <button id="setBtn" onclick="searchBtnClick()" type="button"><!--<img src="images/settings_icon.png" alt="">-->查询</button>
+             
+            <div data-type="2">
+                <div class="data-box1-data" tabindex="0" hidefocus="true">
+                    <li id="selkindlab">学号</li>
+                </div>        
+                <div >                    
+                    <input class="inputText" type="text" id="idinput">            
+                </div>
+            </div>
+     
+       </div>
+      </div>
+      <div class="con_div_text1_2 left">
+          <div class="con_div_text02 left">
+              <img src="../images/person_1.png" class="left text02_img"/>
+              <div class="left text01_div">
+                  <p>在校教师</p>
+                  <p class="sky" id="teaNum">0</p>
+              </div>
+          </div>
+          <div class="con_div_text02 left">
+            <img src="../images/person_2.png" class="left text02_img"/>
+            <div class="left text01_div">
+                <p>在校学生</p>
+                <p class="sky"  id="stuNum">0</p>
+            </div>
+          </div>
+          <div class="con_div_text02 left">
+            <img src="../images/person_4.png" class="left text02_img"/>
+            <div class="left text01_div">
+                <p>在校留学生</p>
+                <p class="sky" id="foreignNum">0</p>
+            </div>
+        </div>
+          <div class="con_div_text02 right">
+              <img src="../images/person_3.png" class="left text02_img"/>
+              <div class="left text01_div">
+                  <p>校外人员</p>
+                  <p class="sky"  id="otherNum">0</p>
+              </div>
+          </div>
+      </div>
+      <div class="con_div_text1_1">
+
+          <div class="con_div_text03">
+              <!--<img src="../images/info_11.png" class="left text01_img"/>-->
+              <div class="text01_div">
+                  <p>境外输入</p>
+                  <p class="org" id="fromOtherCountry">0</p>
+              </div>
+          </div> 
+          <div class="con_div_text03 left">
+            <!--<img src="../images/info_11.png" class="left text01_img"/>-->
+            <div class="text01_div">
+                <p>重点区输入</p>
+                <p class="org" id="fromWh">0</p>
+            </div>
+        </div>
+          <div class="con_div_text03 left">
+              <!--<img src="../images/info_12.png" class="left text01_img"/>-->
+              <div class="text01_div">
+                  <p>重点观察</p>
+                  <p class="org" id="focusNum">0</p>
+              </div>
+          </div>
+      </div>
+  </div>
+    <!--统计分析图-->
+    <div class="div_any flex-container">
+        <div class="div_any01 flex quota-col-1">
+            <div class="div_any_child flex-child">
+                <div class="div_any_title" id="perTitle1"><img src="../images/title_5.png">人员信息</div>
+                <p id="histogramChart1" class="p_chart flex" style="display: block"></p>
+                <div id="personInfo" style="display: none" class="data-box">                        
+                    <p><span>姓名：</span><span id="data_name" style="color:#00FF00"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   <!--性别：<span id="data_sex">男</span>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;年龄：<span id="data_age">20</span>-->
+                   <span>返校来源地：</span><span id="data_from" style="color:#00FF00"></span>
+                    </p>
+                    <p><span>所在班级：</span><span id="data_class" style="color:#00FF00"></span>
+                        &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+                    </p>
+                    <p><span>联系方式：</span><span id="data_phone" style="color:#00FF00"></span></p>
+                    <p><span>返校时间：</span><span id="data_returnTime" style="color:#00FF00"></span></p>
+                    <p><span>返校交通信息：</span><span id="data_transport" style="color:#00FF00"></span></p>
+                    <p><span>隔离时间：</span><span id="data_segregateTime" style="color:#00FF00"></span></p> 
+                    <p><span>紧急联系人电话：</span><span id="data_parentPhone" style="color:#00FF00"></span></p>                        
+                </div>
+            </div>
+            
+            <div class="div_any_child flex-child">
+                <div class="div_any_title"><img src="../images/title_8.png">密切接触人员关系</div>
+                <p id="histogramChart2" class="p_chart flex"></p>
+            </div>
+        </div>
+        <div class="div_any01 flex quota-col-2">
+            <div class="div_any_child flex-child">
+                <div class="div_any_title"><!--<img src="../images/title_7.png">-->个人轨迹</div>               
+                <div id="mapChart" style="width:97.5%;height:95%;display: inline-block;padding-left: 1.25%;padding-top:2.2%"></div>
+                
+                <script>
+                    mapchart();
+                    getMapData(); 
+                    //loadScript();                 
+                </script> 
+
+            </div>
+            <div class="div_any_child flex-child">
+                <div class="div_any_title">校门口出入人数（当日）</div>
+                <p id="lineChart2" class="p_chart flex"></p>
+            </div>
+        </div>
+        <div class="div_any01 flex quota-col-3">
+            <div class="div_any_child flex-child">
+                <div class="div_any_title"><img src="../images/title_16.png">预警信息</div>
+                
+                <div class="scrollUp">
+                    <marquee direction=up  scrollamount  = 2 onmouseover="this.stop()"onmouseout="this.start()">
+                            <ul id="marqueeDiv">
+                                <li>4月3日有发烧人数：2人</li>                               
+                                <li>4月2日流行性感冒：7人</li>                               
+                                <li>4月1日有1名境外人员入校</li>                              
+                                <li>XX处发现疑似病例</li>
+                            </ul>
+                    </marquee>
+                </div>
+            </div>
+            <div class="div_any_child flex-child">
+                <div class="div_any_title"><img src="../images/title_10.png">响应事件</div>
+                <div class="table_p">
+                    <table>
+                        <thead>
+                            <!--<th>序号</th>-->
+                            <th width="20%">姓名</th>
+                            <th width="60%">响应事件</th>                           
+                            <th width="20%" >响应级别</th>
+                        
+                        </thead>
+                        <tbody id="responseInfoDiv">
+                            
+                        <!--<tr><td>张三</td><td>疑似病例</td><td>一级</td></tr>
+                        <tr><td>李四</td><td>与疑似病例接触</td><td>一级</td></tr>
+                        <tr><td>王五</td><td>4月2日17:30隔离期间出校门</td><td>三级</td></tr>
+                        <tr><td>赵六</td><td>4月3日11:00从重点区返校</td><td>二级</td></tr>
+                        <tr></tr>
+                        <tr></tr>
+                        <tr></tr>-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+<script src="../scripts/echarts-all.js"></script>
+<script src="../scripts/drawl.js"></script>
+<script>   
+    getRelationData();
+</script> 
+<!--<script src="../scripts/Plugin/echarts.min.js"></script>-->
+  
+<script>
+    //if(!school && typeof(school)!='undefined' && school!=0){
+
+    if(school!=null && school!=undefined){
+        $('#schoolName').html(school+"疫情大数据展示");
+    }else{
+        $('#schoolName').html("疫情大数据展示");
+    }
+    
+</script>
+
+
+</html>

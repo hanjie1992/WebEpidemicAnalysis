@@ -1,0 +1,118 @@
+﻿*{
+    margin:0px; padding:0px;
+}
+
+a{
+    text-decoration:none;
+}
+
+body{
+    background:#024aa3 url("../images/loginBg.png") no-repeat;
+    background-size:cover;
+    background-repeat:no-repeat;
+}
+
+#loginWraper {
+    position:fixed;
+    top:50%;
+    left:50%;
+    margin-left:-250px;
+    margin-top:-150px;
+    width:500px;
+    height:350px;
+    background:url(../images/loginWraper.png);
+}
+
+#title{
+    width:80%;
+    height:45px;
+    margin:10px auto;
+    line-height:45px;
+    text-align:center;
+    font-size:30px;
+    font-family:YouYuan;
+    font-weight:bold;
+    color:white;
+}
+
+#content, #action, #loginConfirm{
+    margin-top:15px;
+}
+
+#content table tr td, #loginConfirm table tr td{
+    height:50px;
+}
+
+#content label{
+    color:white;
+    font-weight:bold;
+    font-family:YouYuan;
+    letter-spacing:1px;
+    font-size:14px;
+    height:30px;
+    margin-left:115px;
+    margin-right:5px;
+}
+
+#userName, #password, #validateCode{
+    color:	#010101;
+    width:200px;
+    height:30px;
+    border-radius:5px;
+    padding-left:5px;
+    letter-spacing:0.5px;
+    font-size:14px;
+    background-color:rgba(255, 255, 255, 0.40);
+    border:0px;
+    /*border:2px solid rgba(0, 215, 237, 1.00);*/
+}
+
+#validateCode{
+    width:200px;
+}
+
+#userName:focus, #password:focus, #validateCode:focus{
+    border:0px;
+    /*border:2px solid #00a3f6;*/
+    outline:none;
+}
+
+#code{
+    float:right;
+    margin-right:5px;
+    height:30px;
+}
+
+#rememberPw{
+    margin-left:135px;
+    width:13px;
+    height:13px;
+    vertical-align:middle;
+}
+
+#action label{
+    color:white;
+    font-weight:bold;
+    font-family:YouYuan;
+    font-size:13px;
+    margin-left:0px;
+}
+
+#confirm{
+    margin-left:115px;
+    border:1px solid #FF9A14;
+    background-color:#FF9A14;
+    width:270px;
+    height:30px;
+    color:white;
+    border-radius:5px;
+    font-weight:bold;
+    font-family:YouYuan;
+    font-size:14px;
+}
+
+#confirm:hover{
+    border:1px solid #E36709;
+    background-color:#E36709;
+    outline:none;
+}
